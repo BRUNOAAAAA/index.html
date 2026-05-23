@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIGH | Site Oficial | Eu Venci o Mundo</title>
+    <!-- Fontes Modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#000000',
+                        graphite: '#121212',
+                        accent: '#BB86FC', 
+                        gold: '#D4AF37',   
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+        }
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #BB86FC;
+            transition: width .3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .card-hover:hover {
+            border-color: rgba(187, 134, 252, 0.3);
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            background: #121212;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(187, 134, 252, 0.4);
+        }
+
+        /* Animações de Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Efeito de Onda */
+        .wave-item {
+            opacity: 0;
+            animation: waveIn 0.8s ease-out forwards;
+        }
+        @keyframes waveIn {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Telas */
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .screen.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Efeito de Fade In para telas */
+        .screen.active {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Cards com efeito hover */
+        .info-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(187, 134, 252, 0.2);
+        }
+        .info-card:hover {
+            border-color: rgba(187, 134, 252, 0.6);
+            box-shadow: 0 0 20px rgba(187, 134, 252, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Divisor com onda */
+        .wave-divider {
+            position: relative;
+            height: 100px;
+            background: linear-gradient(180deg, #000000 0%, #121212 100%);
+        }
+        .wave-divider svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="font-poppins">
+
+    <!-- Header Fixo -->
+    <header class="fixed w-full z-50 px-6 py-4 flex justify-between items-center glass-card">
+        <div class="text-2xl font-black tracking-tighter font-montserrat cursor-pointer" onclick="showScreen('home')">
+            <a href="javascript:void(0)" class="hover:text-accent transition">VEIGH</a>
+        </div>
+        <nav class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-widest">
+            <a href="javascript:void(0)" onclick="showScreen('home')" class="nav-link">Home</a>
+            <a href="javascript:void(0)" onclick="showScreen('historia')" class="nav-link">História</a>
+            <a href="javascript:void(0)" onclick="showScreen('familia')" class="nav-link">Família</a>
+            <a href="javascript:void(0)" onclick="showScreen('album')" class="nav-link">Álbum</a>
+        </nav>
+        <div class="flex items-center space-x-4">
+            <a href="https://open.spotify.com/artist/4YqwRbMLqGHRHLS1w2ZKse" target="_blank" class="bg-accent text-black px-4 py-2 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-white transition btn-glow">Ouvir</a>
+        </div>
+    </header>
+
+    <!-- ========== TELA HOME ========== -->
+    <div id="home" class="screen active">
+        <!-- Hero Section -->
+        <section class="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663472917861/PAulqAgJZKooBwDW.jpeg" 
+                     alt="Veigh Live" 
+                     class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-4 mt-20">
+                <h1 class="text-6xl md:text-9xl font-black mb-2 font-montserrat tracking-tighter uppercase leading-none drop-shadow-2xl reveal">
+                    VEIGH
+                </h1>
+                <p class="text-2xl md:text-4xl font-bold text-accent font-montserrat tracking-widest uppercase drop-shadow-lg reveal">
+                    Eu Venci o Mundo
+                </p>
+                <div class="mt-12 flex flex-col md:flex-row gap-4 justify-center reveal">
+                    <button onclick="showScreen('historia')" class="border-2 border-white px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-white hover:text-black transition">Ver História</button>
+                    <button onclick="showScreen('familia')" class="bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:bg-accent hover:text-black transition">Conhecer Mais</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== TELA HISTÓRIA ========== -->
+    <div id="historia" class="screen">
+        <section class="pt-32 pb-24 px-6 bg-dark min-h-screen">
+            <div class="max-w-6xl mx-auto">
+                <!-- Botão Voltar -->
+                <button onclick="showScreen('home')" class="mb-8 flex items-center gap-2 text-accent hover:text-white transition uppercase font-bold text-sm tracking-widest">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Voltar
+                </button>
+
+                <h1 class="text-6xl md:text-7xl font-black mb-16 font-montserrat tracking-tighter uppercase reveal">
+                    A Trajetória de Veigh
+                </h1>
+
+                <!-- Timeline -->
+                <div class="space-y-12">
+                    <!-- 2001 -->
+                    <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0s;">
+                        <div class="flex gap-6">
+                            <div class="text-accent font-black text-4xl min-w-fit">2001</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">O Começo</h3>
+                                <p class="text-gray-300 leading-relaxed">Thiago Veigh da Silva nasce em 12 de setembro em Itapevi, São Paulo. Criado na periferia, ele cresce rodeado de criatividade e desafios.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2018-2019 -->
+                    <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.2s;">
+                        <div class="flex gap-6">
+                            <div class="text-accent font-black text-4xl min-w-fit">2018</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Os Primeiros Passos</h3>
+                                <p class="text-gray-300 leading-relaxed">Aos 17 anos, Veigh forma a dupla "Constelação" com seu amigo Heitor. Trabalha em telemarketing em Alphaville durante o dia e grava raps à noite. Essa época marca o início de sua determinação.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2019 -->
+                    <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.4s;">
+                        <div class="flex gap-6">
+                            <div class="text-accent font-black text-4xl min-w-fit">2019</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">O Encontro Decisivo</h3>
+                                <p class="text-gray-300 leading-relaxed">Veigh conhece <strong>Nagalli</strong>, um produtor musical que mudaria sua vida. Juntos, lançam "Indispensável" e criam a <strong>Supernova Ent</strong>. Sua carreira decola com "Londres Freestyle" alcançando 13 milhões de reproduções.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2022 -->
+                    <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.6s;">
+                        <div class="flex gap-6">
+                            <div class="text-accent font-black text-4xl min-w-fit">2022</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Dos Prédios</h3>
+                                <p class="text-gray-300 leading-relaxed">Lançamento do álbum "Dos Prédios", que marca sua consolidação como artista. O projeto reflete sua origem e sua visão de sucesso.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2023 -->
+                    <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.8s;">
+                        <div class="flex gap-6">
+                            <div class="text-accent font-black text-4xl min-w-fit">2023</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">O Recorde Global</h3>
+                                <p class="text-gray-300 leading-relaxed">"Dos Prédios Deluxe" quebra recordes históricos. Veigh bate a marca de 6,5 milhões de streams em 24h, superando Anitta. Alcança o Top 1 Global de estreias no Spotify, consolidando-se como fenômeno internacional.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2025 -->
+                    <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 1s;">
+                        <div class="flex gap-6">
+                            <div class="text-accent font-black text-4xl min-w-fit">2025</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Eu Venci o Mundo</h3>
+                                <p class="text-gray-300 leading-relaxed">Lançamento do álbum "Eu Venci o Mundo" (EVOM) em 26 de junho. Com produções de nível internacional, o projeto marca a consolidação de Veigh como um dos maiores artistas do trap global. Seu nome agora é sinônimo de sucesso.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== TELA FAMÍLIA ========== -->
+    <div id="familia" class="screen">
+        <section class="pt-32 pb-24 px-6 bg-dark min-h-screen">
+            <div class="max-w-6xl mx-auto">
+                <!-- Botão Voltar -->
+                <button onclick="showScreen('home')" class="mb-8 flex items-center gap-2 text-accent hover:text-white transition uppercase font-bold text-sm tracking-widest">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Voltar
+                </button>
+
+                <h1 class="text-6xl md:text-7xl font-black mb-4 font-montserrat tracking-tighter uppercase reveal">
+                    Família & Amigos
+                </h1>
+                <p class="text-accent text-lg mb-16 reveal">O círculo que o tornou quem é</p>
+
+                <!-- Seção Família -->
+                <div class="mb-20">
+                    <h2 class="text-4xl font-black mb-12 uppercase tracking-widest reveal">Família</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Mãe -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Mãe</h3>
+                            <p class="text-gray-300 leading-relaxed">A maior incentivadora de Veigh. Apoiou seu filho durante os tempos difíceis em Itapevi, acreditando em seu sonho quando tudo parecia impossível. É a base emocional de sua trajetória.</p>
+                        </div>
+
+                        <!-- Pai -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.2s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Pai</h3>
+                            <p class="text-gray-300 leading-relaxed">Veigh reencontrou seu pai em 2023, um momento emocionante que marcou sua vida. Seu pai vive no Piauí e constituiu uma nova família. Esse reencontro reforçou os laços familiares.</p>
+                        </div>
+
+                        <!-- Irmãos -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.4s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Irmãos</h3>
+                            <p class="text-gray-300 leading-relaxed">Através do reencontro com o pai, Veigh conheceu seus irmãos que vivem no Piauí. Essa descoberta foi transformadora, conectando-o com suas raízes e ampliando seu círculo familiar.</p>
+                        </div>
+
+                        <!-- Itapevi -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.6s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Raízes</h3>
+                            <p class="text-gray-300 leading-relaxed">Itapevi, São Paulo, é o coração de Veigh. A cidade que o criou, as ruas que o inspiraram, os prédios que mencionava em suas letras. Ele nunca esqueceu de onde veio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção Supernova Ent -->
+                <div>
+                    <h2 class="text-4xl font-black mb-12 uppercase tracking-widest reveal">A Família Supernova</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Nagalli -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Nagalli</h3>
+                            <p class="text-gray-300 leading-relaxed">Produtor musical e sócio de Veigh na Supernova Ent. Nagalli é o "arquiteto" do som que define Veigh. Sua parceria é a base de todos os sucessos, desde "Indispensável" até "Eu Venci o Mundo".</p>
+                        </div>
+
+                        <!-- Kyan -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.2s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Kyan</h3>
+                            <p class="text-gray-300 leading-relaxed">Amigo próximo e colaborador frequente. Kyan representa a força da Baixada e da periferia de SP no trap. Ambos compartilham a mesma visão de ascensão e sucesso.</p>
+                        </div>
+
+                        <!-- Caio Luccas -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.4s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Caio Luccas</h3>
+                            <p class="text-gray-300 leading-relaxed">Grande parceiro musical de Veigh. Juntos criaram sucessos como "Hora Errada" e "Detalhes". Caio é parte essencial do círculo criativo da Supernova.</p>
+                        </div>
+
+                        <!-- Vulgo FK -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.6s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Vulgo FK</h3>
+                            <p class="text-gray-300 leading-relaxed">Amigo próximo com quem Veigh compartilha sucessos como "Ballena". Vulgo FK faz parte do círculo íntimo de criação e representa a força coletiva da cena.</p>
+                        </div>
+
+                        <!-- Produtores -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 0.8s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">Honaiser & Bvga Beatz</h3>
+                            <p class="text-gray-300 leading-relaxed">Produtores que fazem parte do núcleo criativo da Supernova. Suas produções são fundamentais para o som único que define a era Veigh.</p>
+                        </div>
+
+                        <!-- L7NNON -->
+                        <div class="wave-item glass-card p-8 rounded-2xl info-card" style="animation-delay: 1s;">
+                            <h3 class="text-2xl font-bold text-accent mb-4">L7NNON</h3>
+                            <p class="text-gray-300 leading-relaxed">Colaborador importante em projetos como "Detalhes". L7NNON representa a diversidade e a qualidade das parcerias que Veigh cultiva na cena do trap.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== TELA ÁLBUM ========== -->
+    <div id="album" class="screen">
+        <section class="pt-32 pb-24 px-6 bg-dark min-h-screen">
+            <div class="max-w-6xl mx-auto">
+                <!-- Botão Voltar -->
+                <button onclick="showScreen('home')" class="mb-8 flex items-center gap-2 text-accent hover:text-white transition uppercase font-bold text-sm tracking-widest">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Voltar
+                </button>
+
+                <h1 class="text-6xl md:text-7xl font-black mb-4 font-montserrat tracking-tighter uppercase reveal">
+                    Eu Venci o Mundo
+                </h1>
+                <p class="text-accent text-lg mb-16 reveal">O álbum que marcou a história</p>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+                    <!-- Capa -->
+                    <div class="wave-item group relative overflow-hidden rounded-lg shadow-2xl">
+                        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663472917861/UNVbYvrBGauSyqhy.jpg" 
+                             alt="EVOM" 
+                             class="w-full aspect-square object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+
+                    <!-- Info -->
+                    <div class="wave-item glass-card p-8 rounded-2xl">
+                        <h3 class="text-3xl font-bold mb-6 border-b border-gray-800 pb-4">Informações</h3>
+                        <div class="space-y-6 text-gray-300">
+                            <div>
+                                <p class="text-accent font-bold uppercase text-sm mb-2">Data de Lançamento</p>
+                                <p class="text-lg">26 de junho de 2025</p>
+                            </div>
+                            <div>
+                                <p class="text-accent font-bold uppercase text-sm mb-2">Total de Faixas</p>
+                                <p class="text-lg">16 Músicas</p>
+                            </div>
+                            <div>
+                                <p class="text-accent font-bold uppercase text-sm mb-2">Produção</p>
+                                <p class="text-lg">Nível Internacional com Nagalli, Toledo, Stick e outros</p>
+                            </div>
+                            <div>
+                                <p class="text-accent font-bold uppercase text-sm mb-2">Conceito</p>
+                                <p class="text-lg">A vitória pessoal de Veigh e sua ascensão ao topo do mundo do trap</p>
+                            </div>
+                            <div class="pt-4 flex gap-4">
+                                <a href="https://open.spotify.com/album/21FP96bn6KdYTSe5zCbhZT" target="_blank" class="flex-1 text-center py-3 bg-accent text-black rounded-lg font-bold uppercase text-xs tracking-widest hover:bg-white transition">Spotify</a>
+                                <a href="https://music.apple.com/br/album/eu-venci-o-mundo/1819857663" target="_blank" class="flex-1 text-center py-3 border border-gray-700 rounded-lg hover:bg-white hover:text-black transition font-bold text-xs uppercase tracking-widest">Apple Music</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tracklist -->
+                <div class="wave-item glass-card p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-8 border-b border-gray-800 pb-4">Tracklist Completa</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>01. Reuniões Comigo Mesmo</span>
+                                <span class="text-gray-500 text-sm">02:10</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>02. Hiperfoco</span>
+                                <span class="text-gray-500 text-sm">02:20</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>03. Ausência</span>
+                                <span class="text-gray-500 text-sm">02:11</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>04. Artista Genérico</span>
+                                <span class="text-gray-500 text-sm">02:31</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>05. Taylor</span>
+                                <span class="text-gray-500 text-sm">02:03</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>06. Belieber</span>
+                                <span class="text-gray-500 text-sm">01:47</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>07. Mônaco Freestyle</span>
+                                <span class="text-gray-500 text-sm">02:45</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>08. Sem Volta</span>
+                                <span class="text-gray-500 text-sm">02:15</span>
+                            </li>
+                        </ul>
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>09. Noites em Branco</span>
+                                <span class="text-gray-500 text-sm">02:28</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>10. Eu Venci</span>
+                                <span class="text-gray-500 text-sm">02:42</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>11. Mundo</span>
+                                <span class="text-gray-500 text-sm">02:19</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>12. Reflexão</span>
+                                <span class="text-gray-500 text-sm">02:33</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>13. Topo</span>
+                                <span class="text-gray-500 text-sm">02:07</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>14. Legado</span>
+                                <span class="text-gray-500 text-sm">02:51</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>15. Vitória</span>
+                                <span class="text-gray-500 text-sm">02:24</span>
+                            </li>
+                            <li class="flex justify-between items-center group cursor-pointer hover:text-accent transition">
+                                <span>16. Eternidade</span>
+                                <span class="text-gray-500 text-sm">03:15</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-dark border-t border-gray-900">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-2xl font-black font-montserrat tracking-tighter">VEIGH</div>
+            <div class="flex space-x-6 text-gray-500">
+                <a href="https://www.instagram.com/veigh/" target="_blank" class="hover:text-white transition">Instagram</a>
+                <a href="https://twitter.com/thiagoveigh" target="_blank" class="hover:text-white transition">Twitter</a>
+                <a href="https://www.tiktok.com/@thiagoveigh?is_from_webapp=1&sender_device=pc" target="_blank" class="hover:text-white transition">TikTok</a>
+            </div>
+            <p class="text-gray-600 text-sm">© 2026 Supernova Ent. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Função para trocar entre telas
+        function showScreen(screenId) {
+            // Oculta todas as telas
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Mostra a tela solicitada
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                window.scrollTo(0, 0);
+                
+                // Ativa animações de scroll reveal
+                setTimeout(() => {
+                    triggerRevealAnimations();
+                }, 100);
+            }
+        }
+
+        // Função para ativar animações de reveal
+        function triggerRevealAnimations() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                reveal.classList.add('active');
+            });
+        }
+
+        // Scroll Reveal - Anima elementos conforme você rola a página
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Observa todos os elementos com a classe 'reveal'
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+
+            // Ativa animações iniciais
+            triggerRevealAnimations();
+        });
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
